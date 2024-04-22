@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="//code.jquery.com/jquery-3.7.1.slim.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script src="/js/script.js"></script>
+
+    <title>Meeting Management</title>
+</head>
+<body>
+    <h2 style="text-align: center">Meeting Management System</h2>
+    <section style="display: flex; justify-content: space-evenly; ">
+        <section>
+            <div>
+                <h4>Create a new User</h4>
+                <form th:action="@{/addUser}" th:method="post">
+                    <input id="user" type="text" name="name" placeholder="Enter user name" />
+
+                    <button type="submit">Save</button>
+                    <p th:if="${error}" th:text="${error}" style="color: red"></p>
+                </form>
+            </div>
+
+        </section>
+        <section>
+            <h4>Create a new Meeting</h4>
+            <div>
+                <form th:action="@{/addMeeting}" th:method="post">
+                    <label for="title">Meeting title: </label>
+                    <input id="title" type="text" name="title" placeholder="Enter meeting title">
+                    <br> <br>
+                    <label>Add members</label> <br>
+                    <select style="width: 200px" class="js-example-basic-multiple" name="usersId" multiple="multiple">
+                        <option th:each="user: ${users}" th:value="${user.id}" th:text="${user.name}"></option>
+                    </select>
+                    <br> <br>
+                    <button type="submit">Save</button>
+
+                </form>
+            </div>
+        </section>
+        <section>
+
+            <div>
+                <h4>Current UserList:</h4>
+                <ul th:each="user: ${users}">
+                    <li th:text="${user.name}"></li>
+                </ul>
+            </div>
+
+        </section>
+        <section>
+            <h4>All Meeting List:</h4>
+            <table>
+                <tr>
+                    <th>Meeting Title</th>
+                    <th>Members' List</th>
+                </tr>
+                <tr th:each="meeting: ${meetings}">
+                    <td th:text="${meeting.title}"></td>
+                    <td th:text="${meeting.usersId}"></td>
+                </tr>
+            </table>
+        </section>
+    </section>
+
+</body>
+</html>
+
+<!--KERI SSI-->
